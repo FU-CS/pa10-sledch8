@@ -7,11 +7,69 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraphTest {
-    @Test void appHasAGreeting() {
-        Graph g = new Graph();
+    @Test void topologicalsortTest1() {
+        AdjacencyListGraph g = new AdjacencyListGraph(3);
+        g.addEdge(0, 1);
         g.addEdge(1, 2);
+        assertEquals("0 1 2", g.topologicalSort());
+    }
+
+    @Test
+    void topologicalSortTest2() {
+        AdjacencyListGraph g = new AdjacencyListGraph(4);
+        g.addEdge(0, 1);
         g.addEdge(2, 3);
-        assertEquals("1 2 3", g.topologicalSort());
-        assertEquals("1 2 3", g.topologicalSort());
+        // Expected result can vary
+        String result = g.topologicalSort();
+        assertTrue(result.equals("0 1 2 3") || result.equals("2 3 0 1"));
+    }
+
+    @Test
+    void topologicalSortTest3() {
+        AdjacencyListGraph g = new AdjacencyListGraph(3);
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0); // Cycle: 0 -> 1 -> 2 -> 0
+        // String result = g.topologicalSort();
+        assertEquals("Graph has a cycle", g.topologicalSort());
+    }
+
+    @Test
+    void topologicalSortTest4() {
+        AdjacencyListGraph g = new AdjacencyListGraph(0); // No vertices
+        assertEquals("", g.topologicalSort());
+    }
+
+    @Test void kahnTest1() {
+        AdjacencyListGraph g = new AdjacencyListGraph(3);
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+        assertEquals("0 1 2", g.topologicalSort());
+    }
+
+    @Test
+    void kahnTest2() {
+        AdjacencyListGraph g = new AdjacencyListGraph(4);
+        g.addEdge(0, 1);
+        g.addEdge(2, 3);
+        // Expected result can vary
+        String result = g.topologicalSort();
+        assertTrue(result.equals("0 1 2 3") || result.equals("2 3 0 1"));
+    }
+
+    @Test
+    void kahnTest3() {
+        AdjacencyListGraph g = new AdjacencyListGraph(3);
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0); // Cycle: 0 -> 1 -> 2 -> 0
+        // String result = g.topologicalSort();
+        assertEquals("Graph has a cycle", g.topologicalSort());
+    }
+
+    @Test
+    void kahnTest4() {
+        AdjacencyListGraph g = new AdjacencyListGraph(0); // No vertices
+        assertEquals("", g.topologicalSort());
     }
 }
